@@ -1,9 +1,9 @@
-function ProjectPage() {
+function ProjectsPage() {
     return (
-        <div className="project-page">
-            <h1>Project Page</h1>
+        <div className="projects-page">
+            <h1>Projects Page</h1>
             {/* Add your project details here */}
         </div>
     );
 }
-export default ProjectPage;
+export default ProjectsPage;
