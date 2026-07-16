@@ -1,8 +1,16 @@
+import { useProjects } from "@/features/projects/hooks/useProjects"
 function ProjectsPage() {
+    const { projects, loading } = useProjects()
     return (
         <div className="projects-page">
             <h1>Projects Page</h1>
-            {/* Add your project details here */}
+            {loading ? (
+                <p>Loading projects...</p>
+            ) : ( 
+                projects.map((project) => (
+                    <div key={project.id}>{project.name}</div>
+                ))
+            )}
         </div>
     );
 }
