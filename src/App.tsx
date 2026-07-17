@@ -5,6 +5,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import Layout from "@/components/Layout";
 import MyIssuesPage from "@/pages/MyIssuesPage";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import BoardPage from "@/pages/BoardPage";
 function App() {
   return (
     <Routes>
@@ -12,6 +13,7 @@ function App() {
         <Route element= {<Layout />}>
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/my-issues" element={<MyIssuesPage />} />
+          <Route path="/projects/:id/board" element={<BoardPage />} />
         </Route>  
       </Route>
       <Route path="/login" element={<LoginPage />}/>
