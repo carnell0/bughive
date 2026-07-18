@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useTickets } from "@/features/tickets/hooks/useTickets"
+import KanbanBoard from "@/features/tickets/components/KanbanBoard"
+
 
 function BoardPage() {
     const { id } = useParams<{ id: string }>()
@@ -11,9 +13,7 @@ function BoardPage() {
             {loading ? (
                 <p>Chargement...</p>
             ) : (
-                tickets.map((ticket) => (
-                    <div key={ticket.id}>{ticket.title}</div>
-                ))
+                <KanbanBoard tickets={tickets} />
             )}
         </div>
     )
