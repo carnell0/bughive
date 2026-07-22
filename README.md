@@ -67,7 +67,7 @@ npm install
 
 ### Environment variables
 
-Create a `.env` file at the root:
+Copy `.env.example` to `.env` at the root and fill in your Supabase values:
 
 ```bash
 VITE_SUPABASE_URL=your_supabase_url
