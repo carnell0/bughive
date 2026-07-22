@@ -1,13 +1,16 @@
-import { useParams } from "react-router-dom"
-import { useState } from "react"
-import { useTickets } from "@/features/tickets/hooks/useTickets"
-import KanbanBoard from "@/features/tickets/components/KanbanBoard"
-import CreateTicketModal from "@/features/tickets/components/CreateTicketModal"
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useTickets } from "@/features/tickets/hooks/useTickets";
+import KanbanBoard from "@/features/tickets/components/KanbanBoard";
+import CreateTicketModal from "@/features/tickets/components/CreateTicketModal";
+import type { Ticket } from "@/types";
+import TicketDetailPanel from "@/features/tickets/components/TicketDetailPanel";
 
 function BoardPage() {
-  const { id } = useParams<{ id: string }>()
-  const { tickets, loading, fetchTickets } = useTickets(id!)
-  const [showModal, setShowModal] = useState(false)
+  const { id } = useParams<{ id: string }>();
+  const { tickets, loading, fetchTickets } = useTickets(id!);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
@@ -27,7 +30,11 @@ function BoardPage() {
             Chargement...
           </div>
         ) : (
-          <KanbanBoard tickets={tickets} onTicketMoved={fetchTickets} />
+          <KanbanBoard
+            tickets={tickets}
+            onTicketMoved={fetchTickets}
+            onTicketClick={setSelectedTicket}
+          />
         )}
       </div>
 
@@ -38,8 +45,14 @@ function BoardPage() {
           onTicketCreated={fetchTickets}
         />
       )}
+      {selectedTicket && (
+        <TicketDetailPanel
+          ticket={selectedTicket}
+          onClose={() => setSelectedTicket(null)}
+        />
+      )}
     </div>
-  )
+  );
 }
 
-export default BoardPage
+export default BoardPage;

@@ -8,7 +8,7 @@ const priorityConfig = {
   critical: { color: "#EF4444", label: "Critical" },
 }
 
-function KanbanCard({ ticket }: { ticket: Ticket }) {
+function KanbanCard({ ticket, onTicketClick }: { ticket: Ticket; onTicketClick: (ticket: Ticket) => void }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: ticket.id,
   })
@@ -26,6 +26,7 @@ function KanbanCard({ ticket }: { ticket: Ticket }) {
       {...listeners}
       {...attributes}
       className="bg-white rounded-lg shadow-sm mb-2 cursor-grab active:cursor-grabbing overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
+      onClick={() => onTicketClick(ticket)}
     >
       <div className="flex">
         <div className="w-1 flex-shrink-0 rounded-l-lg" style={{ backgroundColor: priority.color }} />
