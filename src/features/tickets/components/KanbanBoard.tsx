@@ -6,11 +6,9 @@ import { supabase } from "@/lib/supabase";
 
 function KanbanBoard({
   tickets: initialTickets,
-  onTicketMoved,
   onTicketClick,
 }: {
   tickets: Ticket[];
-  onTicketMoved: () => void;
   onTicketClick: (ticket: Ticket) => void;
 }) {
   const [tickets, setTickets] = useState(initialTickets);

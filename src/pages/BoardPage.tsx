@@ -32,7 +32,6 @@ function BoardPage() {
         ) : (
           <KanbanBoard
             tickets={tickets}
-            onTicketMoved={fetchTickets}
             onTicketClick={setSelectedTicket}
           />
         )}
