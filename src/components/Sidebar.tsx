@@ -1,5 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabase";
 function Sidebar() {
+    const navigate = useNavigate()
+    async function handleLogout() {
+        await supabase.auth.signOut()
+        navigate("/login")
+    }
     return (
         <div className="flex flex-col w-64 h-screen bg-gray-800 text-white">
             <div className="logo h-16 flex items-center px-4">
@@ -16,9 +22,9 @@ function Sidebar() {
                 </NavLink>
             </div>
             <div className="flex justify-between">
-                <NavLink to="/profile" className="block px-4 py-2">
-                    My Profile
-                </NavLink>
+                <button onClick={handleLogout} className="block px-4 py-2 bg-red-600 hover:bg-red-700 w-full text-center">
+                    Logout
+                </button>
             </div>
         </div>    
 
