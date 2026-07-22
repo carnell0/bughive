@@ -1,24 +1,20 @@
-# BugHive — Journal de progression
+## Bilan — BugHive v1
 
-## Session 1 — Fondations
+### Fonctionnalités livrées
+- Authentification complète avec routes protégées
+- Projets: liste, création et suppression avec Supabase
+- Tickets: création, déplacement de statut sur le board et panneau de détail
+- Kanban board avec drag-and-drop (dnd-kit) et mises à jour de statut côté client
+- Panneau de détail de ticket
+- Design responsive complet (sidebar desktop / navbar mobile)
+- Premier test automatisé (auth flow avec mock Supabase)
 
-### Ce que j'ai mis en place
-- Projet Vite + React + TypeScript initialisé
-- Mode strict activé dans tsconfig.app.json
-- Tailwind CSS v4 configuré via @tailwindcss/vite
-- Imports absolus avec l'alias @/ configuré dans vite.config.ts et tsconfig
-- React Router v6 installé et configuré
-- Structure de dossiers feature-based créée
-- Layout principal avec sidebar et Outlet en place
+### Compétences techniques consolidées
+- React + TypeScript strict (props typées, hooks personnalisés)
+- Architecture feature-based
+- State management : useState local vs Zustand pour état partagé
+- Row Level Security avec Supabase
+- Optimistic UI updates
+- Distinction click vs drag avec dnd-kit sensors
+- Tests avec mocks (Vitest + Testing Library)
 
-### Ce que j'ai compris
-- main.tsx est le point d'entrée unique, App.tsx est juste un composant
-- .tsx pour les fichiers avec du JSX, .ts pour la logique pure
-- react-router-dom est la version web de react-router
-- Zustand résout le prop drilling en créant un store global
-- Les Layout Routes permettent d'appliquer un layout à certaines pages seulement
-- Outlet est le trou dans le layout où React Router injecte la page enfant
-- flex sur le parent aligne les enfants, pas sur l'enfant lui-même
-
-### Ce qui reste flou
--

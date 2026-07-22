@@ -1,73 +1,96 @@
-# React + TypeScript + Vite
+# BugHive
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight bug tracker for small teams, built with React, TypeScript, Supabase, and a feature-based folder structure.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+BugHive currently provides email/password authentication, protected routes, a projects list, a project board with drag-and-drop ticket status updates, and a ticket detail panel. The app is built as a small product-style React project with a Supabase backend.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Authentication** — Email/password login with protected routes and logout
+- **Projects** — List projects, create a project, and delete a project
+- **Board** — Open a project board and move tickets between To Do, In Progress, and Done
+- **Tickets** — Create tickets and inspect their details from the board
+- **Responsive layout** — Desktop sidebar plus mobile sidebar overlay
+- **Testing** — Login flow covered with Vitest and React Testing Library
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Layer | Technology |
+|---|---|
+| Framework | React 19 + TypeScript |
+| Build tool | Vite |
+| Styling | Tailwind CSS v4 |
+| State management | Zustand for auth state |
+| Backend | Supabase (Auth + Postgres) |
+| Routing | React Router 7 |
+| Drag & drop | dnd-kit |
+| Testing | Vitest + React Testing Library + jsdom |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Routes
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- `/login` — login page
+- `/projects` — projects list
+- `/my-issues` — placeholder page currently scaffolded in the app
+- `/projects/:id/board` — Kanban board for a project
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
+```
+src/
+├── components/        # Layout, Sidebar, ProtectedRoute
+├── features/
+│   ├── projects/      # project modal + project hook
+│   └── tickets/       # board, cards, modals, hooks
+├── lib/               # Supabase client
+├── pages/             # route-level pages
+├── store/             # Zustand auth store
+├── test/              # test setup
+└── types/             # shared TypeScript types
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 18+
+- A Supabase project
+
+### Installation
+
+```bash
+git clone https://github.com/carnell0/bughive.git
+cd bughive
+npm install
 ```
+
+### Environment variables
+
+Create a `.env` file at the root:
+
+```bash
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### Supabase setup
+
+Create `projects` and `tickets` tables in Supabase, with Row Level Security enabled. The shared data shapes are defined in [src/types/index.ts](src/types/index.ts).
+
+### Run locally
+
+```bash
+npm run dev
+```
+
+### Run tests
+
+```bash
+npm run test
+```
+
+## Author
+
+**Carnell THON** — Frontend & Mobile Developer
+[GitHub](https://github.com/carnell0)
