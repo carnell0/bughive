@@ -1,9 +1,16 @@
+import { useState, useEffect } from "react"
 import type { Ticket } from "@/types"
 import { DndContext } from "@dnd-kit/core"
 import KanbanColumn from "@/features/tickets/components/KanbanColumn"
 import { supabase } from "@/lib/supabase"
 
-function KanbanBoard({ tickets, onTicketMoved }: { tickets: Ticket[]; onTicketMoved: () => void }) {
+function KanbanBoard({ tickets: initialTickets, onTicketMoved }: { tickets: Ticket[]; onTicketMoved: () => void }) {
+  const [tickets, setTickets] = useState(initialTickets)
+
+  useEffect(() => {
+    setTickets(initialTickets)
+  }, [initialTickets])
+
   const todoTickets = tickets.filter((ticket) => ticket.status === "todo")
   const inProgressTickets = tickets.filter((ticket) => ticket.status === "in_progress")
   const doneTickets = tickets.filter((ticket) => ticket.status === "done")
@@ -11,8 +18,24 @@ function KanbanBoard({ tickets, onTicketMoved }: { tickets: Ticket[]; onTicketMo
   async function handleDragEnd(event: any) {
     const { active, over } = event
     if (!over) return
-    await supabase.from("tickets").update({ status: over.id }).eq("id", active.id)
-    onTicketMoved()
+
+    const ticketId = active.id
+    const newStatus = over.id
+
+    // Mise à jour immédiate (optimistic update)
+    setTickets((prev) =>
+      prev.map((ticket) =>
+        ticket.id === ticketId ? { ...ticket, status: newStatus } : ticket
+      )
+    )
+
+    // Synchronisation avec Supabase en arrière-plan
+    const { error } = await supabase.from("tickets").update({ status: newStatus }).eq("id", ticketId)
+
+    if (error) {
+      // En cas d'erreur, on annule le changement local
+      setTickets(initialTickets)
+    }
   }
 
   return (
