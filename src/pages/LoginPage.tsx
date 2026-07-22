@@ -39,17 +39,21 @@ function LoginPage() {
 
                 <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col gap-4">
                     <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1 block">Email</label>
+                        <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1 block">Email</label>
                         <input
+                            id="email"
+                            placeholder="Email"
                             className="border border-gray-300 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1 block">Mot de passe</label>
+                        <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1 block">Mot de passe</label>
                         <input
+                            id="password"
                             type="password"
+                            placeholder="Mot de passe"
                             className="border border-gray-300 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
