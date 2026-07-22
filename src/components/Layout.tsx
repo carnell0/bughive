@@ -9,7 +9,7 @@ function Layout() {
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar desktop */}
       <div className="hidden md:flex">
-        <Sidebar />
+        <Sidebar onNavigate={() => setSidebarOpen(false)} />
       </div>
 
       {/* Overlay mobile */}
@@ -24,7 +24,7 @@ function Layout() {
       <div className={`fixed inset-y-0 left-0 z-30 md:hidden transition-transform duration-300 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}>
-        <Sidebar />
+        <Sidebar onNavigate={() => setSidebarOpen(false)} />
       </div>
 
       {/* Contenu principal */}

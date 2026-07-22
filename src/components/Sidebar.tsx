@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 
-function Sidebar() {
+function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const navigate = useNavigate();
 
   async function handleLogout() {
@@ -19,6 +19,7 @@ function Sidebar() {
       <nav className="flex-1 px-3 py-4 space-y-1">
         <NavLink
           to="/projects"
+          onClick={onNavigate}
           className={({ isActive }) =>
             `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
               isActive
@@ -35,6 +36,7 @@ function Sidebar() {
 
         <NavLink
           to="/my-issues"
+          onClick={onNavigate}
           className={({ isActive }) =>
             `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
               isActive
