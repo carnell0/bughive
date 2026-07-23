@@ -6,11 +6,14 @@ export interface Project {
     created_at: string
 }
 
+export const ticketStatuses = ["todo", "in_progress", "done"] as const
+export type TicketStatus = (typeof ticketStatuses)[number]
+
 export interface Ticket {
     id: string
     title: string
     description: string | null
-    status: 'todo' | 'in_progress' | 'done'
+    status: TicketStatus
     priority: 'low' | 'medium' | 'high'
     project_id: string
     assignee_id: string | null

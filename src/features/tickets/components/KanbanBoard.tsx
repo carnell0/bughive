@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import type { Ticket } from "@/types";
-import { DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { ticketStatuses, type Ticket, type TicketStatus } from "@/types";
+import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import KanbanColumn from "@/features/tickets/components/KanbanColumn";
 import { supabase } from "@/lib/supabase";
+
+function isValidStatus(value: unknown): value is TicketStatus {
+  return typeof value === "string" && ticketStatuses.some((status) => status === value);
+}
 
 function KanbanBoard({
   tickets: initialTickets,
@@ -31,18 +35,23 @@ function KanbanBoard({
     }),
   );
 
-  async function handleDragEnd(event: any) {
+  async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over) return;
 
-    const ticketId = active.id;
+    const ticketId = String(active.id);
     const newStatus = over.id;
+
+    if (!isValidStatus(newStatus)) {
+      return;
+    }
 
     setTickets((prev) =>
       prev.map((ticket) =>
         ticket.id === ticketId ? { ...ticket, status: newStatus } : ticket,
       ),
     );
+    
 
     const { error } = await supabase
       .from("tickets")
